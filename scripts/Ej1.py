@@ -30,6 +30,6 @@ if not os.access(input_path, os.R_OK):
 
 #converting the file to fasta
 
-result_count=SeqIO.convert(input_path, "genbank", name+".fasta", "fasta")
+result_count=SeqIO.convert(input_path, "genbank", name+".fas", "fasta")
 
 print("Converted %i records" % result_count)
