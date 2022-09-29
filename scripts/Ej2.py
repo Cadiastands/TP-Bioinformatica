@@ -78,7 +78,6 @@ if mode == "remote":
 
     
 else:
-    PATH_TO_DB = "/home/santiago/Downloads/ncbi-blast-2.13.0+/data/"
     blastn_cline = NcbiblastpCommandline(query = input_path, db = args.db + "swissprot", outfmt = 5, out = "results.xml")
     stdout, stderr = blastn_cline()
     blast_result = NCBIXML.parse(open("results.xml"))
