@@ -1,12 +1,11 @@
 import os
-import sys
 from Bio.Blast import NCBIWWW
 from Bio.Blast import NCBIXML
 from Bio.Blast.Applications import NcbiblastpCommandline
-from Bio.Blast.Applications import NcbiblastnCommandline
 import argparse
 
 
+E_VALUE_LIMIT = 0.04
 
 def parse_output (blast_result,value_limit,mode,filename):
     output = ""
@@ -30,6 +29,7 @@ def parse_output (blast_result,value_limit,mode,filename):
         file.write(output)
 
 
+# Parse the arguments
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-input", metavar="INPUT", help="input file, must be a FASTA file (.fas)",required=True)
@@ -41,19 +41,9 @@ args = parser.parse_args()
 if args.mode == "local" and args.db == None:
     parser.error("Must provide db path in -db argument")
 
-
-E_VALUE_LIMIT = 0.04
-
-
-
-
-#Extracting the name of the file
 input_path=args.input
 path=os.path.dirname(input_path)
 filename=os.path.basename(input_path)
-
-#Local or remote BLAST
-mode = args.mode
 
 if not os.path.isfile(input_path):
     print ("File doesnt exist/couldn't be opened")
@@ -63,9 +53,11 @@ if not os.access(input_path, os.R_OK):
     print ("File not readable")
     exit(1)
 
-# input_path = "fastita.fas"
-fasta_fd = open(input_path).read()
 
+# Perform the BLAST
+
+mode = args.mode
+fasta_fd = open(input_path).read()
 
 
 if mode == "remote":
@@ -82,6 +74,3 @@ else:
     stdout, stderr = blastn_cline()
     blast_result = NCBIXML.parse(open("results.xml"))
     parse_output(blast_result,E_VALUE_LIMIT,mode,args.output)
-
-
-
