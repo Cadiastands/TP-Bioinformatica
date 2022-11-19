@@ -3,11 +3,11 @@ import os
 from Bio import Entrez
 from Bio import SeqIO
 import time
-Entrez.email = "smonjeau@itba.edu.ar"
+
 parser = argparse.ArgumentParser()
 parser.add_argument("-input", metavar="INPUT", help="input expected is a blast report",required=True)
 parser.add_argument("-pattern", metavar="PATTERN", help="pattern to search",required = True)
-#args = parser.parse_args()
+args = parser.parse_args()
 
 
 
@@ -30,8 +30,6 @@ if not os.access(input_path, os.R_OK):
 blast_report_fd = open(input_path,'r')
 
 accessions = []
-
-pattern =  'sapiens' #args.pattern
 
 filtered_output = open('filtered_output.txt','w')
 
@@ -67,16 +65,25 @@ while True:
 
 filtered_output.close()
 
+Entrez.email = "jsackmann@itba.edu.ar"
 
-for accession in accessions:
+try:
+    os.makedirs("accession_fasta_files")
+except FileExistsError:
+    # directory already exists
+    pass
 
-    time.sleep(1)
-    data = Entrez.efetch(db = "protein", id=int(accession),rettype="gp",retmode="xml")
-    record = SeqIO.read(data,"genbank")
-    SeqIO.write(record,"sequences/{s}.fasta".format(s=accession) ,'fasta')
 
-    data.close()
+for i in range(0,len(accessions)):
 
- 
-    
+    time.sleep(0.4)
+    try:    
+        data = Entrez.efetch(db = "nuccore", id=accessions[i],rettype='fasta',retmode='text')
+        record = SeqIO.read(data,'fasta')
+        SeqIO.write(record,"accession_fasta_files/{s}.fasta".format(s=accessions[i]) ,'fasta')
+        data.close()
+        print("created Fasta File {index}/{total}".format(index=i+1,total=len(accessions)))
+    except Exception as e:
+        print(e)
+
 
