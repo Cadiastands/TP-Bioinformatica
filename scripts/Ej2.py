@@ -32,7 +32,7 @@ def parse_output (blast_result,value_limit,mode,filename):
 # Parse the arguments
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-input", metavar="INPUT", help="input file, must be a FASTA file (.fas)",required=True)
+parser.add_argument("-input", metavar="INPUT", help="input file, must be a FASTA file (.fas/.fasta)",required=True)
 parser.add_argument("-output", metavar="OUTPUT", help="output file name",required=True)
 parser.add_argument("-mode",choices=['local','remote'] ,metavar="MODE", help="mode must be <local> or <remote>. Default is remote",default='remote')
 parser.add_argument("-db",metavar="DB_PATH",help="path to db. Only use if mode is local")

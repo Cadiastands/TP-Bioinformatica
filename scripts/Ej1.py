@@ -56,7 +56,8 @@ if not os.access(input_path, os.R_OK):
 # Read mRNA, traduce to proteins and save as FASTA file
 
 records = SeqIO.parse(input_path, 'gb')
+SeqIO.write(records, open(args.output + '_nucleic.fas', 'w'), 'fasta')
 
 aminoacid_seq = [translate_record(rec) for rec in records]
 
-SeqIO.write(aminoacid_seq, open(args.output + '.fas', 'w'), 'fasta')
+SeqIO.write(aminoacid_seq, open(args.output + '_aminoacids.fas', 'w'), 'fasta')
