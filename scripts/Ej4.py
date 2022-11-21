@@ -7,11 +7,12 @@ import time
 parser = argparse.ArgumentParser()
 parser.add_argument("-input", metavar="INPUT", help="input expected is a blast report",required=True)
 parser.add_argument("-pattern", metavar="PATTERN", help="pattern to search",required = True)
+parser.add_argument("-db",metavar="DB",help="Database for sequence lookup",required=False, default="protein")
 args = parser.parse_args()
 
 
 
-input_path= 'blast.out' #args.input
+input_path= args.input
 path=os.path.dirname(input_path)
 filename=os.path.basename(input_path)
 
@@ -34,6 +35,10 @@ accessions = []
 filtered_output = open('filtered_output.txt','w')
 
 sequences_folder = open('sequences','w')
+
+pattern = args.pattern
+
+db = args.db
 
 while True:
 
@@ -78,7 +83,7 @@ for i in range(0,len(accessions)):
 
     time.sleep(0.4)
     try:    
-        data = Entrez.efetch(db = "nuccore", id=accessions[i],rettype='fasta',retmode='text')
+        data = Entrez.efetch(db = db, id=accessions[i],rettype='fasta',retmode='text')
         record = SeqIO.read(data,'fasta')
         SeqIO.write(record,"accession_fasta_files/{s}.fasta".format(s=accessions[i]) ,'fasta')
         data.close()
