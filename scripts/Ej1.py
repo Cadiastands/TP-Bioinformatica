@@ -10,10 +10,8 @@ import argparse
 
 def translate_record(record):
     table = 1
-    min_pro_len = 54
-    x= 0
+    min_pro_len = 25
 
-    aux = []
     max_seq = []
     for strand, nuc in [(+1, record.seq), (-1, record.seq.reverse_complement())]:
         for frame in range(3):
@@ -21,12 +19,8 @@ def translate_record(record):
             for pro in nuc[frame:frame+length].translate(table).split("*"):
                 splitlocal = pro.find('M')
                 seq_final = pro[splitlocal:]
-                if len(seq_final) >= min_pro_len:
-                    aux.append(seq_final)
-
-                    x = x+1
-                if len(max_seq) < len(seq_final):
-                    max_seq = seq_final   
+                if len(seq_final) >= min_pro_len and len(max_seq) < len(seq_final):
+                    max_seq = seq_final
     return SeqRecord(seq = max_seq, \
                    id =  record.id + "_translated", \
                    description = record.description + " translated to protein")        
@@ -56,8 +50,11 @@ if not os.access(input_path, os.R_OK):
 # Read mRNA, traduce to proteins and save as FASTA file
 
 records = SeqIO.parse(input_path, 'gb')
+records_for_translation = [r for r in records]
+
+
 SeqIO.write(records, open(args.output + '_nucleic.fas', 'w'), 'fasta')
 
-aminoacid_seq = [translate_record(rec) for rec in records]
+aminoacid_seq = [translate_record(rec) for rec in records_for_translation]
 
 SeqIO.write(aminoacid_seq, open(args.output + '_aminoacids.fas', 'w'), 'fasta')
