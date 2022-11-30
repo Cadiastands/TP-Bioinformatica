@@ -38,8 +38,8 @@ path = os.path.dirname(input_path)
 filename = os.path.basename(input_path)
 name, ext = os.path.splitext(filename)
 
-if input_file.split(".")[-1] != "gb" and input_file.split(".")[-1] != "gbk":
-    print("Wrong file type for input")
+if input_path.split(".")[-1] != "gb" and input_path.split(".")[-1] != "gbk":
+    print("Wrong file type for input, must be .gbk/.gb")
     exit(1)
 
 if not os.path.isfile(input_path):

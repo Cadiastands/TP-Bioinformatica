@@ -45,6 +45,10 @@ input_path=args.input
 path=os.path.dirname(input_path)
 filename=os.path.basename(input_path)
 
+if input_path.split(".")[-1] != "fas" and input_path.split(".")[-1] != "fasta":
+    print("Wrong file type for input, must be .fas/.fasta")
+    exit(1)
+
 if not os.path.isfile(input_path):
     print ("File doesnt exist/couldn't be opened")
     exit(1)

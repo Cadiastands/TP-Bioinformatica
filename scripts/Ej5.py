@@ -15,7 +15,7 @@ input_file = args.input
 output_file = args.output + ".patmatmotifs"
 
 if input_file.split(".")[-1] != "fasta" and input_file.split(".")[-1] != "fas":
-    print("Wrong file type for input")
+    print("Wrong file type for input, must be .fas/.fasta")
     exit(1)
 
 os.system("prosextract -prositedir .")

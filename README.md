@@ -11,12 +11,12 @@ Tras clonar el repositorio, correr `pip install -r requirements.txt`
 -   Ejercicio 4: `python scripts/Ej4.py  -input <blast_dump_input> -pattern <pattern> [-db <db_for_accession_lookup>]`
  
 -   Ejercicio 5: `$> python scripts/Ej5.py  -input <fasta_input> -output <output_name>`
-    Previamente es necesario descargarse EMBOSS junto con los archivos prosite.dat y prosite.doc que se pueden descargar del siguiente link: https://ftp.expasy.org/databases/prosite/
+    Previamente es necesario descargarse EMBOSS junto con los archivos prosite.dat y prosite.doc que se pueden descargar del siguiente link: https://ftp.expasy.org/databases/prosite/.
 
 
 ### Archivos usados
 
-- Gen fibrosis quistica: https://www.ncbi.nlm.nih.gov/gene/1080
+- Gen fibrosis quística: https://www.ncbi.nlm.nih.gov/gene/1080
 
 - Transcript (ARNm): https://www.ncbi.nlm.nih.gov/nuccore/NM_000492.4
 
